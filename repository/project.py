@@ -6,7 +6,9 @@ class Project:
     Classe représentant un projet GitLab ou GitHub.
     """
 
-    def __init__(self, full_name: str, url: str, forge: Gitforge):
+    def __init__(
+        self, full_name: str, url: str, forge: Gitforge, archived: bool = False
+    ):
         """
         Repository
         """
@@ -17,6 +19,7 @@ class Project:
         splitted = full_name.split("/")
         self.organization = splitted[0]  # kiwilan
         self.name = splitted[1]  # slink-docker
+        self.archived = archived
         self.mirror = False
 
     def set_mirror(self, value: bool):

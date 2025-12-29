@@ -71,6 +71,8 @@ def delete_mirrors(projects: list[Project]):
 
 def mirroring(projects: List[Project], forge: Gitforge):
     for project in projects:
+        if project.archived:
+            print(f"Skip archived {project.forge.value} {project.full_name}")
         try:
             resp = migrate(project, forge)
 

@@ -81,6 +81,7 @@ def github_list() -> List[Project]:
                     full_name=rep["owner"]["login"] + "/" + rep["name"],
                     url=rep["html_url"],
                     forge=Gitforge.GITHUB,
+                    archived=rep["archived"],
                 )
                 if not rep["archived"]:
                     projects.append(repo)
@@ -117,6 +118,7 @@ def gitlab_list() -> List[Project]:
                     full_name=rep["path_with_namespace"],
                     url=rep["web_url"],
                     forge=Gitforge.GITLAB,
+                    archived=rep["archived"],
                 )
                 projects.append(repo)
         page += 1

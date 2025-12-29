@@ -75,9 +75,9 @@ def mirroring(projects: List[Project], forge: Gitforge):
             resp = migrate(project, forge)
 
             if resp.status_code in [200, 201]:
-                print(f"Done for {project.full_name}")
+                print(f"Done for {project.forge.value} {project.full_name}")
             elif resp.status_code in [409]:
-                print(f"Already exists for {project.full_name}")
+                print(f"Already exists for {project.forge.value} {project.full_name}")
             else:
                 print(
                     f"Failed for {project.full_name}: {resp.status_code} - {resp.text}"
@@ -85,5 +85,5 @@ def mirroring(projects: List[Project], forge: Gitforge):
             time.sleep(1)
 
         except Exception as e:
-            print(f"Error migrating {project.full_name}: {e}")
+            print(f"Error migrating {project.forge.value} {project.full_name}: {e}")
             time.sleep(1)

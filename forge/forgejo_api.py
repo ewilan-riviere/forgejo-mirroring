@@ -57,6 +57,7 @@ def migrate(project: Project, forge: Gitforge) -> requests.Response:
             "auth_username": "oauth2",
             "auth_password": auth_password,
             "mirror": True,
+            "private": True,
         },
         timeout=30,
     )

@@ -11,13 +11,17 @@ def main():
     parser.add_argument(
         "-o", "--override", action="store_true", help="Enable override mode"
     )
+    parser.add_argument(
+        "-a", "--archived", action="store_true", help="Mirror archived repositories too"
+    )
 
     args = parser.parse_args()
 
     if args.override:
         print("Enable override mode")
-    else:
-        print("Classic mode")
+    if args.archived:
+        print("Enable archived mode")
+    keep_archived = bool(args.archived)
     print("")
 
     if args.override:
@@ -27,11 +31,11 @@ def main():
         print("")
 
     print("Mirroring repositories from GitLab...")
-    forgejo_api.mirroring(gitlab_list(), Gitforge.GITLAB)
+    forgejo_api.mirroring(gitlab_list(), Gitforge.GITLAB, keep_archived)
     print("Done!")
     print("")
     print("Mirroring repositories from GitHub...")
-    forgejo_api.mirroring(github_list(), Gitforge.GITHUB)
+    forgejo_api.mirroring(github_list(), Gitforge.GITHUB, keep_archived)
     print("Done!")
 
 

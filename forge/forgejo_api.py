@@ -69,10 +69,12 @@ def delete_mirrors(projects: list[Project]):
             delete(project.organization, project.name)
 
 
-def mirroring(projects: List[Project], forge: Gitforge):
+def mirroring(projects: List[Project], forge: Gitforge, keep_archived: bool = False):
     for project in projects:
-        if project.archived:
+        if keep_archived is not True and project.archived:
             print(f"Skip archived {project.forge.value} {project.full_name}")
+            break
+
         try:
             resp = migrate(project, forge)
 
@@ -84,8 +86,8 @@ def mirroring(projects: List[Project], forge: Gitforge):
                 print(
                     f"Failed for {project.full_name}: {resp.status_code} - {resp.text}"
                 )
-            time.sleep(1)
+            time.sleep(0.5)
 
         except Exception as e:
             print(f"Error migrating {project.forge.value} {project.full_name}: {e}")
-            time.sleep(1)
+            time.sleep(0.5)

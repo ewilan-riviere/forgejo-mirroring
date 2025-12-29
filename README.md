@@ -33,5 +33,13 @@ Delete all mirroring repositories on forgejo and mirroring repositories from Git
 python forgejo-migrate --override
 ```
 
+### Archived
+
+Mirroring archived repositories (default mode don't mirror it).
+
+```sh
+python forgejo-migrate --archived
+```
+
 [python-version-src]: https://img.shields.io/static/v1?style=flat&label=Python&message=v3.9&color=3776AB&logo=python&logoColor=ffffff&labelColor=18181b
 [python-version-href]: https://www.python.org/

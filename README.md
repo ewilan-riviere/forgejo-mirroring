@@ -15,7 +15,7 @@ cp .env.example .env
 
 Set `GITLAB_USER`, `GITLAB_TOKEN`, `GITLAB_ORGS`, `GITHUB_USER`, `GITHUB_TOKEN`, `GITHUB_ORGS`, `FORGEJO_INSTANCE` and `FORGEJO_TOKEN`.
 
-Forgejo API: <https://codeberg.org/api/swagger> (or with `YOUR_OWN_INSTANCE/api/swagger`)
+Forgejo API: <https://codeberg.org/api/swagger> (or with `FORGEJO_INSTANCE/api/swagger`)
 
 ## Usage
 

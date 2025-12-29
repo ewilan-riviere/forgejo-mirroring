@@ -1,4 +1,4 @@
-"""List git repositories"""
+"""Get variables from .env"""
 
 import os
 from dotenv import load_dotenv

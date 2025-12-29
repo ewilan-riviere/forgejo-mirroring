@@ -1,5 +1,5 @@
 import argparse
-from repositories import forgejo_list, gitlab_list, github_list
+from listing.repositories import forgejo_list, gitlab_list, github_list
 from repository.gitforge import Gitforge
 from forge import forgejo_api
 

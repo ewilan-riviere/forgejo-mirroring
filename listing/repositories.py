@@ -101,7 +101,6 @@ def gitlab_list() -> List[Project]:
             },
             params={
                 "membership": "true",
-                "archived": "false",
                 "per_page": PER_PAGE,
                 "page": page,
             },

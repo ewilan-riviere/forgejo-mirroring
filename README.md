@@ -60,7 +60,7 @@ For Forgejo : Access tokens
 
 ## Usage
 
-Keep existing mirrors on forgejo and mirroring repositories from GitLab and GitHub (if not exists).
+Mirroring repositories from GitLab and GitHub (if not exists).
 
 ```sh
 python forgejo-migrate
@@ -68,7 +68,7 @@ python forgejo-migrate
 
 ### Override
 
-Delete all mirroring repositories on forgejo and mirroring repositories from GitLab and GitHub.
+Delete all mirroring repositories on Forgejo, before mirroring.
 
 ```sh
 python forgejo-migrate --override
@@ -76,7 +76,7 @@ python forgejo-migrate --override
 
 ### Archived
 
-Mirroring archived repositories (default mode don't mirror it).
+Mirroring archived repositories too.
 
 ```sh
 python forgejo-migrate --archived

@@ -1,4 +1,5 @@
 import argparse
+import sys
 from src.forge import Gitlab, Github, Forgejo, ForgeApi
 
 
@@ -49,6 +50,13 @@ def mirror(forge: ForgeApi, keep_archived: bool = False) -> Forgejo:
 def main():
     print("forgejo-migrate")
 
+    version_min = (3, 14)
+    if sys.version_info < version_min:
+        sys.stderr.write(
+            f"Error: Python {version_min[0]}.{version_min[1]} or later required.\n"
+        )
+        sys.exit(1)
+
     parser = argparse.ArgumentParser(
         description="Migrate repositories to Forgejo with mirroring"
     )
@@ -76,9 +84,6 @@ def main():
 
     gitlab = listing_gitlab()
     mirror(gitlab, keep_archived)
-
-    print(len(github.repositories))
-    print(len(gitlab.repositories))
 
 
 if __name__ == "__main__":

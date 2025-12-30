@@ -1,10 +1,51 @@
 import argparse
-from listing.repositories import forgejo_list, gitlab_list, github_list
-from repository.gitforge import Gitforge
-from forge import forgejo_api
+from src.forge import Gitlab, Github, Forgejo, ForgeApi
+
+
+def listing_forgejo(delete: bool = False) -> Forgejo:
+    print("Listing Forgejo repositories...")
+    print("")
+    forgejo = Forgejo().listing()
+    if delete:
+        print("Deleting Forgejo mirrors repositories...")
+        print("")
+        forgejo.delete_mirrors()
+        print("")
+
+    return forgejo
+
+
+def listing_github() -> ForgeApi:
+    print("Parse GitHub repositories...")
+    print("")
+    github = Github().listing()
+
+    return github
+
+
+def listing_gitlab() -> ForgeApi:
+    print("Parse GitLab repositories...")
+    print("")
+    gitlab = Gitlab().listing()
+
+    return gitlab
+
+
+def mirror(forge: ForgeApi, keep_archived: bool = False) -> Forgejo:
+    forgejo = Forgejo()
+    for repository in forge.repositories:
+        if keep_archived is not True and repository.archived:
+            print(f"Skip archived {repository.forge.value} {repository.full_name}")
+            break
+
+        forgejo.mirror_repository(repository, forge.token)
+
+    return forgejo
 
 
 def main():
+    print("forgejo-migrate")
+
     parser = argparse.ArgumentParser(
         description="Migrate repositories to Forgejo with mirroring"
     )
@@ -21,22 +62,16 @@ def main():
         print("Enable override mode")
     if args.archived:
         print("Enable archived mode")
+    override = bool(args.override)
     keep_archived = bool(args.archived)
     print("")
 
-    if args.override:
-        print("Delete all mirroring repositories from Forgejo...")
-        forgejo_api.delete_mirrors(forgejo_list())
-        print("Done!")
-        print("")
+    listing_forgejo(override)
+    github = listing_github()
+    gitlab = listing_gitlab()
 
-    print("Mirroring repositories from GitLab...")
-    forgejo_api.mirroring(gitlab_list(), Gitforge.GITLAB, keep_archived)
-    print("Done!")
-    print("")
-    print("Mirroring repositories from GitHub...")
-    forgejo_api.mirroring(github_list(), Gitforge.GITHUB, keep_archived)
-    print("Done!")
+    mirror(github, keep_archived)
+    mirror(gitlab, keep_archived)
 
 
 if __name__ == "__main__":

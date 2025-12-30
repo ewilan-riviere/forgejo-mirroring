@@ -3,6 +3,7 @@ from src.forge import Gitlab, Github, Forgejo, ForgeApi
 
 
 def listing_forgejo(delete: bool = False) -> Forgejo:
+    print("")
     print("Listing Forgejo repositories...")
     print("")
     forgejo = Forgejo().listing()
@@ -16,6 +17,7 @@ def listing_forgejo(delete: bool = False) -> Forgejo:
 
 
 def listing_github() -> ForgeApi:
+    print("")
     print("Parse GitHub repositories...")
     print("")
     github = Github().listing()
@@ -24,6 +26,7 @@ def listing_github() -> ForgeApi:
 
 
 def listing_gitlab() -> ForgeApi:
+    print("")
     print("Parse GitLab repositories...")
     print("")
     gitlab = Gitlab().listing()

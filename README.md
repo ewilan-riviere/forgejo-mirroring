@@ -35,6 +35,29 @@ Here domain is `codeberg.org`, of course you can replace with your own instance.
 
 Forgejo API: <https://codeberg.org/api/swagger> (or with `FORGEJO_INSTANCE/api/swagger`)
 
+## Tokens
+
+For GitLab : Personal access tokens
+
+<https://gitlab.com/-/user_settings/personal_access_tokens>
+
+- `read_api`
+
+For GitHub : Personal access tokens (classic)
+
+<https://github.com/settings/tokens>
+
+- `repo`: `repo:status`, `repo_deployment`, `public_repo`, `repo:invite`, `security_events`
+- `read:org`
+
+For Forgejo : Access tokens
+
+<https://codeberg.org/user/settings/applications>
+
+- `organization`: _Read_
+- `repository`: _Read and write_
+- `user`: _Read_
+
 ## Usage
 
 Keep existing mirrors on forgejo and mirroring repositories from GitLab and GitHub (if not exists).

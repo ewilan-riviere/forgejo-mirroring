@@ -26,6 +26,7 @@ class Forgejo(ForgeApi):
                 "/user/repos",
                 RequestMethod.GET,
                 {
+                    "order_by": "oldest",
                     "limit": PER_PAGE,
                     "page": page,
                 },

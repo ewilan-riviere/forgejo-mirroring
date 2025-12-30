@@ -27,6 +27,8 @@ class Github(ForgeApi):
                 {
                     "visibility": "all",
                     "affiliation": "owner,collaborator,organization_member",
+                    "sort": "oldest",
+                    "direction": "asc",
                     "per_page": PER_PAGE,
                     "page": page,
                 },

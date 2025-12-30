@@ -27,7 +27,8 @@ class Gitlab(ForgeApi):
                 RequestMethod.GET,
                 {
                     "membership": True,
-                    # "archived": False,
+                    "order_by": "created_at",
+                    "sort": "asc",
                     "per_page": PER_PAGE,
                     "page": page,
                 },
@@ -43,14 +44,16 @@ class Gitlab(ForgeApi):
             for repo in response.data:
                 parser = Parser(repo)
                 if parser.get(["namespace", "full_path"]) in GITLAB_ORGS:
-                    self.repositories.append(
-                        Repository(
-                            full_name=f"{parser.get("path_with_namespace")}",
-                            url=parser.get("web_url"),
-                            forge=Gitforge.GITLAB,
-                            archived=parser.get("archived"),
-                        ),
-                    )
+                    full_name = f"{parser.get("path_with_namespace")}"
+                    if "deletion_scheduled" not in full_name:
+                        self.repositories.append(
+                            Repository(
+                                full_name=full_name,
+                                url=parser.get("web_url"),
+                                forge=Gitforge.GITLAB,
+                                archived=parser.get("archived"),
+                            ),
+                        )
             page += 1
 
         return self

@@ -13,7 +13,7 @@ Create `.env`:
 cp .env.example .env
 ```
 
-For GitLab
+**For GitLab**
 
 Here domain is `gitlab.com`, of course you can replace with your own instance.
 
@@ -21,12 +21,16 @@ Here domain is `gitlab.com`, of course you can replace with your own instance.
 - `GITLAB_TOKEN`: set GitLab token, go to <https://gitlab.com/-/user_settings/personal_access_tokens> to generate it
 - `GITLAB_ORGS`: set GitLab username and organization you want to mirror
 
-For GitHub
+GitLab API: <https://docs.gitlab.com/api/rest>
+
+**For GitHub**
 
 - `GITHUB_TOKEN`: set GitHub token, go to <https://github.com/settings/tokens> to generate it
 - `GITLAB_ORGS`: set GitHub username and organization you want to mirror
 
-For Forgejo
+GitHub API: <https://docs.github.com/en/rest/about-the-rest-api/about-the-rest-api>
+
+**For Forgejo**
 
 Here domain is `codeberg.org`, of course you can replace with your own instance.
 

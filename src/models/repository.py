@@ -14,7 +14,9 @@ class Repository:
         self.name = splitted[1]  # slink-docker
         self.archived = archived
         self.mirror = False
-        self.mirror_name = f"{forge.get_mirror_name()}_{self.name}"  # gl_slink-docker
+        self.mirror_name = (
+            f"{forge.get_mirror_name()}_{self.organization}_{self.name}".lower()
+        )  # gl_slink-docker
 
     def set_mirror(self, value: bool):
         self.mirror = value

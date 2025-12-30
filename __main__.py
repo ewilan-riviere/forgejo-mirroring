@@ -70,11 +70,15 @@ def main():
     print("")
 
     listing_forgejo(override)
+
     github = listing_github()
     mirror(github, keep_archived)
 
     gitlab = listing_gitlab()
     mirror(gitlab, keep_archived)
+
+    print(len(github.repositories))
+    print(len(gitlab.repositories))
 
 
 if __name__ == "__main__":

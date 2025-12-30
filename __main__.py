@@ -36,7 +36,7 @@ def mirror(forge: ForgeApi, keep_archived: bool = False) -> Forgejo:
     for repository in forge.repositories:
         if keep_archived is not True and repository.archived:
             print(f"Skip archived {repository.forge.value} {repository.full_name}")
-            break
+            continue
 
         forgejo.mirror_repository(repository, forge.token)
 
@@ -68,9 +68,9 @@ def main():
 
     listing_forgejo(override)
     github = listing_github()
-    gitlab = listing_gitlab()
-
     mirror(github, keep_archived)
+
+    gitlab = listing_gitlab()
     mirror(gitlab, keep_archived)
 
 

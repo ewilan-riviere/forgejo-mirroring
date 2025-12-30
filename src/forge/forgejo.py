@@ -36,7 +36,7 @@ class Forgejo(ForgeApi):
                 break
 
             if not isinstance(response.data, (list, tuple)):
-                break
+                continue
 
             for repo in response.data:
                 parser = Parser(repo)

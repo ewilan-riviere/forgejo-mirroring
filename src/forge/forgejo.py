@@ -82,7 +82,10 @@ class Forgejo(ForgeApi):
             time.sleep(0.5)
 
             if resp.status_code in [200, 201]:
-                print(f"Done for {repository.forge.value} {repository.full_name}")
+                msg = f"Done for {repository.forge.value} {repository.full_name}"
+                print(msg)
+                if repository.archived:
+                    print(f"{msg} (archived repository)")
                 return True
 
             if resp.status_code in [409]:

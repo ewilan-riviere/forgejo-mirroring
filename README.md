@@ -4,6 +4,8 @@
 
 Quickly back up your GitHub and GitLab repositories via [Forgejo](https://forgejo.org/) with mirroring.
 
+Repository mirror name will use this template: `{forge_shortcut}_{group}_{name}` (lowercase), like `gh_ewilan-riviere_forgejo-mirroring`. Mirror authentication will use `oauth2` with GitHub/GitLab token (`mirror` and `private`).
+
 ## Environnement
 
 Create `.env`:

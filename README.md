@@ -102,25 +102,19 @@ python forgejo-mirroring --archived
 
 ### GitHub
 
-GitHub API: <https://docs.github.com/en/rest/about-the-rest-api/about-the-rest-api>
-
-**API Version**: _2022-11-28_
+[GitHub API](https://docs.github.com/en/rest/about-the-rest-api/about-the-rest-api) with **API Version** _2022-11-28_
 
 - [**List repositories for the authenticated user**](https://docs.github.com/en/rest/repos/repos#list-repositories-for-the-authenticated-user): _GET_ `/user/repos` (`visibility`, `affiliation`, `sort`, `direction`, `per_page`, `page`)
 
 ### GitLab
 
-GitLab API: <https://docs.gitlab.com/api/rest> and [Endpoints available for GitHub App user access tokens](https://docs.github.com/en/rest/authentication/endpoints-available-for-github-app-user-access-tokens)
-
-**API Version**: _18.8.0_ (`/api/v4`)
+[GitLab API](https://docs.gitlab.com/api/rest) and [Endpoints available for GitHub App user access tokens](https://docs.github.com/en/rest/authentication/endpoints-available-for-github-app-user-access-tokens) with **API Version** _18.8.0_ (`/api/v4`)
 
 - [**List projects**](https://docs.gitlab.com/api/projects/#list-all-projects): _GET_ `/projects` (`membership`, `order_by`, `sort`, `per_page`, `page`)
 
 ### Forgejo
 
-Forgejo API: <https://codeberg.org/api/swagger> (or with `FORGEJO_INSTANCE/api/swagger`)
-
-**API Version**: _13.0.3_ (`/api/v1`)
+[Forgejo API](https://codeberg.org/api/swagger) (or with `FORGEJO_INSTANCE/api/swagger`) with **API Version** _13.0.3_ (`/api/v1`)
 
 - [**List the repos that the authenticated user owns**](https://codeberg.org/api/swagger#/user/userCurrentListRepos): _GET_ `/user/repos` (`order_by`, `limit`, `page`)
 - [**Get a repository**](https://codeberg.org/api/swagger#/repository/repoGet): _GET_ `/repos/{owner}/{repo}`

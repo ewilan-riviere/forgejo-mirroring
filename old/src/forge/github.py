@@ -1,4 +1,4 @@
-from src.forge.api import ForgeApi
+from forgejo_mirroring.repositories.forge import ForgeApi
 from src.variables import (
     GITHUB_TOKEN,
     GITHUB_ORGS,
@@ -6,7 +6,7 @@ from src.variables import (
 )
 from src.utils import Response, Parser
 from src.models import Repository, Gitforge
-from .request_method import RequestMethod
+from ....src.forgejo_mirroring.repositories.request_method import RequestMethod
 
 
 class Github(ForgeApi):

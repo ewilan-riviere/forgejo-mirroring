@@ -1,0 +1,88 @@
+from typing import Any, Sequence
+from forgejo_mirroring.config import (
+    PER_PAGE,
+    GITHUB_TOKEN,
+    GITHUB_ORGS,
+)
+from forgejo_mirroring.services import Parser
+from forgejo_mirroring.models import Gitforge, Repository
+
+# import requests
+from .forge import ForgeApi
+from .request_method import RequestMethod
+
+# from src.variables import (
+#     GITHUB_TOKEN,
+#     GITHUB_ORGS,
+#     PER_PAGE,
+# )
+# from src.utils import Response, Parser
+# from src.models import Repository, Gitforge
+# from .request_method import RequestMethod
+
+
+class GithubRepo(ForgeApi):
+    def __init__(self):
+        super().__init__(
+            self._set_headers(),
+            self._set_api_url(),
+            GITHUB_TOKEN or "",
+        )
+
+    def listing(self):
+        page = 1
+
+        while True:
+            response = self.request(
+                "/user/repos",
+                RequestMethod.GET,
+                {
+                    "visibility": "all",
+                    "affiliation": "owner,collaborator,organization_member",
+                    "sort": "oldest",
+                    "direction": "asc",
+                    "per_page": PER_PAGE,
+                    "page": page,
+                },
+            )
+            response.raise_for_status()
+            body_raw: Any = response.json()
+
+            if isinstance(body_raw, Sequence):
+                body: Sequence[Any] = body_raw  # type: ignore
+            else:
+                print("Error in list.")
+                body = []
+                break
+
+            if not body:
+                # print("Reach end of repositories list.")
+                break
+
+            for repo in body:
+                parser = Parser(repo)
+                if parser.get(["owner", "login"]) in GITHUB_ORGS:
+                    repository = Repository(
+                        full_name=f"{parser.get(["owner", "login"])}/{parser.get("name")}",
+                        url=parser.get("html_url"),
+                        forge=Gitforge.GITHUB,
+                        archived=parser.get("archived"),
+                    )
+
+                    if repository:
+                        self.repositories.append(repository)
+            page += 1
+
+        return self
+
+    def _set_headers(self):
+        return {
+            "Authorization": f"Bearer {GITHUB_TOKEN}",
+            "Accept": "application/vnd.github+json",
+        }
+
+    def _set_token(self):
+        return GITHUB_TOKEN or ""
+
+    def _set_api_url(self):
+        return "https://api.github.com"

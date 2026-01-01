@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import List, Self
 from urllib.parse import urlencode, quote
 import requests
-from src.models import Repository
+from forgejo_mirroring.models import Repository
 from .request_method import RequestMethod
 
 
@@ -23,7 +23,6 @@ class ForgeApi(ABC):
         body: dict[str, str | bool | int] | None = None,
     ):
         url = f"{self._api_url}{endpoint}"
-        # print(self.get_full_url(url, params))
 
         match method:
             case RequestMethod.GET:
@@ -76,6 +75,19 @@ class ForgeApi(ABC):
             query_str = urlencode(str_params, quote_via=quote, safe=",")
 
         return f"{url}?{query_str}" if query_str else url
+
+    def print_repositories(self):
+        i = 1
+        print(len(self.repositories))
+        for repo in self.repositories:
+            msg = f"{i}. {repo.full_name}"
+            if repo.archived:
+                msg = f"{msg} (archived)"
+            print(msg)
+            i = i + 1
+
+    def __str__(self):
+        return f"""\nAPI URL: {self._api_url}\n"""
 
     @abstractmethod
     def listing(self) -> Self:

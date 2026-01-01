@@ -82,10 +82,12 @@ docker exec -it forgejo-mirroring python /app -d -a
 
 ### Dependencies
 
-You have to use Python v3.14 or later, install requirements from `pip freeze > requirements.txt`
+You have to use Python v3.10 or later, install requirements:
 
 ```sh
-pip install -r requirements.txt
+pip install .
+# OR for local development
+pip install -e ".[dev]"
 ```
 
 ### Usage
@@ -93,7 +95,15 @@ pip install -r requirements.txt
 Mirroring repositories from GitLab and GitHub (if not exists).
 
 ```sh
-python forgejo-mirroring
+python -m forgejo_mirroring
+```
+
+### Test
+
+Execute tests:
+
+```sh
+pytest -v
 ```
 
 ## Endpoints used
@@ -119,5 +129,5 @@ python forgejo-mirroring
 - [**Delete a repository**](https://codeberg.org/api/swagger#/repository/repoDelete): _DELETE_ `/repos/{owner}/{repo}`
 - [**Migrate a remote git repository**](https://codeberg.org/api/swagger#/repository/repoMigrate): _POST_ `/repos/migrate` (`clone_addr`, `repo_name`, `auth_username`, `auth_password`, `mirror`, `private`)
 
-[python-version-src]: https://img.shields.io/static/v1?style=flat&label=Python&message=v3.14&color=3776AB&logo=python&logoColor=ffffff&labelColor=18181b
+[python-version-src]: https://img.shields.io/static/v1?style=flat&label=Python&message=v3.10&color=3776AB&logo=python&logoColor=ffffff&labelColor=18181b
 [python-version-href]: https://www.python.org/

@@ -1,2 +1,5 @@
 __pycache__
+build
+forgejo_mirroring.*
 .env
+project.md

@@ -1,20 +1,20 @@
-"""Get variables from .env"""
+# """Get variables from .env"""
 
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-# GitLab
+# # GitLab
 GITLAB_DOMAIN = os.environ.get("GITLAB_DOMAIN")
 GITLAB_TOKEN = os.environ.get("GITLAB_TOKEN")
 GITLAB_ORGS = os.environ.get("GITLAB_ORGS")
 
-# GitHub
+# # GitHub
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 GITHUB_ORGS = os.environ.get("GITHUB_ORGS")
 
-# Forgejo
+# # Forgejo
 FORGEJO_DOMAIN = os.environ.get("FORGEJO_DOMAIN")
 FORGEJO_TOKEN = os.environ.get("FORGEJO_TOKEN")
 

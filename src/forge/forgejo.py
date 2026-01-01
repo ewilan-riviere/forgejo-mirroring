@@ -58,7 +58,7 @@ class Forgejo(ForgeApi):
 
     def delete_mirrors(self):
         for repository in self.repositories:
-            if repository.mirror:
+            if repository.mirrored:
                 print(f"Delete Forgejo mirror {repository.full_name}")
                 success = self.delete_repository(repository)
                 if success is not True:
@@ -102,9 +102,19 @@ class Forgejo(ForgeApi):
 
     def delete_repository(self, repository: Repository) -> bool:
         resp = self.request(
-            f"/repos/{repository.organization}/{repository.name}",
+            f"/repos/{repository.group}/{repository.name}",
             RequestMethod.DELETE,
         )
+
+        return resp.status_code in [204]
+
+    def is_exists(self, repository: Repository) -> bool:
+        resp = self.request(
+            f"/repos/{repository.group}/{repository.name}",
+            RequestMethod.GET,
+        )
+        print(resp)
+        print(resp.request.path_url)
 
         return resp.status_code in [204]
 

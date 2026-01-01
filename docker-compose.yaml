@@ -1,0 +1,7 @@
+services:
+  forgejo-mirroring:
+    build: .
+    container_name: ${CONTAINER_NAME:-forgejo-mirroring}
+    restart: ${CONTAINER_RESTART:-unless-stopped}
+    env_file:
+      - .env

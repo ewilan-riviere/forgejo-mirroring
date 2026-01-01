@@ -5,32 +5,32 @@ from logger_utils import log
 
 
 def listing_forgejo(delete: bool = False) -> Forgejo:
-    print("")
-    print("Listing Forgejo repositories...")
-    print("")
+    log.skip()
+    log.info("Listing Forgejo repositories...")
+    log.skip()
     forgejo = Forgejo().listing()
     if delete:
-        print("Deleting Forgejo mirrors repositories...")
-        print("")
+        log.warning("Deleting Forgejo mirrors repositories...")
+        log.skip()
         forgejo.delete_mirrors()
-        print("")
+        log.skip()
 
     return forgejo
 
 
 def listing_github() -> ForgeApi:
-    print("")
-    print("Parse GitHub repositories...")
-    print("")
+    log.skip()
+    log.info("Parse GitHub repositories...")
+    log.skip()
     github = Github().listing()
 
     return github
 
 
 def listing_gitlab() -> ForgeApi:
-    print("")
-    print("Parse GitLab repositories...")
-    print("")
+    log.skip()
+    log.info("Parse GitLab repositories...")
+    log.skip()
     gitlab = Gitlab().listing()
 
     return gitlab
@@ -40,7 +40,9 @@ def mirror(forge: ForgeApi, keep_archived: bool = False) -> Forgejo:
     forgejo = Forgejo()
     for repository in forge.repositories:
         if keep_archived is not True and repository.archived:
-            print(f"Skip archived {repository.forge.value} {repository.full_name}")
+            log.warning(
+                f"Skip archived {repository.forge.value} {repository.full_name}"
+            )
             continue
 
         forgejo.mirror_repository(repository, forge.token)
@@ -49,7 +51,7 @@ def mirror(forge: ForgeApi, keep_archived: bool = False) -> Forgejo:
 
 
 def main():
-    log.title("forgejo-mirroring")
+    log.title("Forgejo Mirroring")
     log.skip()
 
     version_min = (3, 14)
@@ -96,6 +98,7 @@ def main():
 
     gitlab = listing_gitlab()
     mirror(gitlab, archived)
+    log.skip()
 
 
 if __name__ == "__main__":

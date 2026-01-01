@@ -15,3 +15,13 @@ class Gitforge(Enum):
             return "fj"
         else:
             raise ValueError(f"Unsupported forge: {self}")
+
+    def get_forge_name(self):
+        if self is Gitforge.GITLAB:
+            return "GitLab"
+        elif self is Gitforge.GITHUB:
+            return "GitHub"
+        elif self is Gitforge.FORGEJO:
+            return "Forgejo"
+        else:
+            raise ValueError(f"Unsupported forge: {self}")

@@ -8,6 +8,7 @@ from src.variables import (
 from src.utils import Response, Parser
 from src.models import Repository, Gitforge
 from .request_method import RequestMethod
+from logger_utils import log
 
 
 class Forgejo(ForgeApi):
@@ -59,10 +60,10 @@ class Forgejo(ForgeApi):
     def delete_mirrors(self):
         for repository in self.repositories:
             if repository.mirrored:
-                print(f"Delete Forgejo mirror {repository.full_name}")
+                log.warning(f"Delete Forgejo `{repository.full_name}`")
                 success = self.delete_repository(repository)
                 if success is not True:
-                    print(f"  Forgejo mirror {repository.full_name} failed to delete")
+                    log.error(f"  Forgejo `{repository.full_name}` failed to delete")
 
     def mirror_repository(self, repository: Repository, token: str) -> bool:
         try:
@@ -82,24 +83,25 @@ class Forgejo(ForgeApi):
             time.sleep(0.5)
 
             if resp.status_code in [200, 201]:
-                msg = f"Done for {repository.forge.value} {repository.full_name}"
-                print(msg)
+                msg = f"{repository.forge.get_forge_name()} `{repository.full_name}` ready"
                 if repository.archived:
-                    print(f"{msg} (archived repository)")
+                    log.info(f"{msg} (archived)")
+                else:
+                    log.info(msg)
                 return True
 
             if resp.status_code in [409]:
-                print(
+                log.warning(
                     f"Already exists for {repository.forge.value} {repository.full_name}"
                 )
                 return False
 
         except Exception as e:
-            print(
+            log.error(
                 f"Error migrating {repository.forge.value} {repository.full_name}: {e}"
             )
 
-        print(f"Error migrating {repository.forge.value} {repository.full_name}")
+        log.error(f"Error migrating {repository.forge.value} {repository.full_name}")
 
         return False
 

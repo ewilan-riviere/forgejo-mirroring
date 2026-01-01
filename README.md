@@ -61,7 +61,19 @@ docker compose up -d --build
 Run application:
 
 ```sh
-docker exec -it forgejo-mirroring python /app
+docker exec -it forgejo-mirroring python /app -d
+```
+
+| Option       | Alias | Description                                                    | Default |
+| ------------ | ----- | -------------------------------------------------------------- | ------- |
+| `--delete`   | `-d`  | Delete all mirroring repositories on Forgejo, before mirroring | —       |
+| `--archived` | `-a`  | Mirroring archived repositories too                            | —       |
+
+Example:
+
+```sh
+# This command will delete all mirrored repositories and mirroring all repositories included archives
+docker exec -it forgejo-mirroring python /app -d -a
 ```
 
 ## Local
@@ -82,37 +94,21 @@ Mirroring repositories from GitLab and GitHub (if not exists).
 python forgejo-mirroring
 ```
 
-### Delete
-
-Delete all mirroring repositories on Forgejo, before mirroring.
-
-```sh
-python forgejo-mirroring --delete
-```
-
-### Archived
-
-Mirroring archived repositories too.
-
-```sh
-python forgejo-mirroring --archived
-```
-
 ## Endpoints used
 
-### GitHub
+### GitHub API
 
 [GitHub API](https://docs.github.com/en/rest/about-the-rest-api/about-the-rest-api) with **API Version** _2022-11-28_
 
 - [**List repositories for the authenticated user**](https://docs.github.com/en/rest/repos/repos#list-repositories-for-the-authenticated-user): _GET_ `/user/repos` (`visibility`, `affiliation`, `sort`, `direction`, `per_page`, `page`)
 
-### GitLab
+### GitLab API
 
 [GitLab API](https://docs.gitlab.com/api/rest) and [Endpoints available for GitHub App user access tokens](https://docs.github.com/en/rest/authentication/endpoints-available-for-github-app-user-access-tokens) with **API Version** _18.8.0_ (`/api/v4`)
 
 - [**List projects**](https://docs.gitlab.com/api/projects/#list-all-projects): _GET_ `/projects` (`membership`, `order_by`, `sort`, `per_page`, `page`)
 
-### Forgejo
+### Forgejo API
 
 [Forgejo API](https://codeberg.org/api/swagger) (or with `FORGEJO_INSTANCE/api/swagger`) with **API Version** _13.0.3_ (`/api/v1`)
 

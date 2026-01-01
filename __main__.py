@@ -1,6 +1,7 @@
 import argparse
 import sys
 from src.forge import Gitlab, Github, Forgejo, ForgeApi
+from logger_utils import log
 
 
 def listing_forgejo(delete: bool = False) -> Forgejo:
@@ -48,7 +49,8 @@ def mirror(forge: ForgeApi, keep_archived: bool = False) -> Forgejo:
 
 
 def main():
-    print("forgejo-migrate")
+    log.title("forgejo-mirroring")
+    log.skip()
 
     version_min = (3, 14)
     if sys.version_info < version_min:
@@ -60,30 +62,40 @@ def main():
     parser = argparse.ArgumentParser(
         description="Migrate repositories to Forgejo with mirroring"
     )
+
+    help_delete = "Delete all mirroring repositories on Forgejo, before mirroring"
+    help_archived = "Mirroring archived repositories too"
+
     parser.add_argument(
-        "-o", "--override", action="store_true", help="Enable override mode"
+        "-do",
+        "--delete",
+        action="store_true",
+        help=help_delete,
     )
     parser.add_argument(
-        "-a", "--archived", action="store_true", help="Mirror archived repositories too"
+        "-a",
+        "--archived",
+        action="store_true",
+        help=help_archived,
     )
 
     args = parser.parse_args()
+    delete = bool(args.delete)
+    archived = bool(args.archived)
 
-    if args.override:
-        print("Enable override mode")
-    if args.archived:
-        print("Enable archived mode")
-    override = bool(args.override)
-    keep_archived = bool(args.archived)
-    print("")
+    if delete:
+        log.comment(f"Enable delete mode: {help_delete}")
+    if archived:
+        log.comment(f"Enable archived mode: {help_archived}")
+    log.skip()
 
-    listing_forgejo(override)
+    listing_forgejo(delete)
 
     github = listing_github()
-    mirror(github, keep_archived)
+    mirror(github, archived)
 
     gitlab = listing_gitlab()
-    mirror(gitlab, keep_archived)
+    mirror(gitlab, archived)
 
 
 if __name__ == "__main__":

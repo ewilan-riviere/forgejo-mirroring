@@ -12,29 +12,29 @@ Create `.env`:
 cp .env.example .env
 ```
 
+**For GitHub**
+
+- `GITHUB_TOKEN`: set GitHub token, go to <https://github.com/settings/tokens> to generate it (check [which options to choose for the token](#tokens))
+- `GITLAB_ORGS`: set GitHub username and organizations you want to mirror
+
+GitHub API: <https://docs.github.com/en/rest/about-the-rest-api/about-the-rest-api>
+
 **For GitLab**
 
 Here domain is `gitlab.com`, of course you can replace with your own instance.
 
 - `GITLAB_DOMAIN`: set GitLab domain, default is `gitlab.com`
-- `GITLAB_TOKEN`: set GitLab token, go to <https://gitlab.com/-/user_settings/personal_access_tokens> to generate it
+- `GITLAB_TOKEN`: set GitLab token, go to <https://gitlab.com/-/user_settings/personal_access_tokens> to generate it (check [which options to choose for the token](#tokens))
 - `GITLAB_ORGS`: set GitLab username and organizations you want to mirror
 
 GitLab API: <https://docs.gitlab.com/api/rest> or [Endpoints available for GitHub App user access tokens](https://docs.github.com/en/rest/authentication/endpoints-available-for-github-app-user-access-tokens)
-
-**For GitHub**
-
-- `GITHUB_TOKEN`: set GitHub token, go to <https://github.com/settings/tokens> to generate it
-- `GITLAB_ORGS`: set GitHub username and organizations you want to mirror
-
-GitHub API: <https://docs.github.com/en/rest/about-the-rest-api/about-the-rest-api>
 
 **For Forgejo**
 
 Here domain is `codeberg.org`, of course you can replace with your own instance.
 
 - `FORGEJO_DOMAIN`: set Forgejo domain, default is `codeberg.org`
-- `FORGEJO_TOKEN`: set Forgejo token, go to <https://codeberg.org/user/settings/applications> to generate it
+- `FORGEJO_TOKEN`: set Forgejo token, go to <https://codeberg.org/user/settings/applications> to generate it (check [which options to choose for the token](#tokens))
 
 Forgejo API: <https://codeberg.org/api/swagger> (or with `FORGEJO_INSTANCE/api/swagger`)
 
@@ -43,20 +43,20 @@ Forgejo API: <https://codeberg.org/api/swagger> (or with `FORGEJO_INSTANCE/api/s
 > [!TIP]
 > For security reasons, choose a token with an expiration date. The goal of this project is to make mirroring very easy on all your repositories, so if your tokens have a one-year expiration date, you only need to run a command once a year.
 
-For GitLab : Personal access tokens
-
-<https://gitlab.com/-/user_settings/personal_access_tokens>
-
-- `read_api`
-
-For GitHub : Personal access tokens (classic)
+**For GitHub : Personal access tokens (classic)**
 
 <https://github.com/settings/tokens>
 
 - `repo`: `repo:status`, `repo_deployment`, `public_repo`, `repo:invite`, `security_events`
 - `read:org`
 
-For Forgejo : Access tokens
+**For GitLab : Personal access tokens**
+
+<https://gitlab.com/-/user_settings/personal_access_tokens>
+
+- `read_api`
+
+**For Forgejo : Access tokens**
 
 <https://codeberg.org/user/settings/applications>
 

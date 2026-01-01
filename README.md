@@ -61,7 +61,7 @@ docker compose up -d --build
 Run application:
 
 ```sh
-docker exec -it forgejo-mirroring python /app -d
+docker exec -it forgejo-mirroring python /app
 ```
 
 | Option       | Alias | Description                                                    | Default |

@@ -38,7 +38,7 @@ class ForgejoRepo(ForgeApi):
 
             for repo in body:
                 parser = Parser(repo)
-                repo = Repository(
+                repository = Repository(
                     full_name=f"{parser.get("full_name")}",
                     url=parser.get("html_url"),
                     forge=Gitforge.FORGEJO,
@@ -46,9 +46,9 @@ class ForgejoRepo(ForgeApi):
                 )
 
                 if parser.get("mirror"):
-                    repo.set_mirror(True)
+                    repository.set_mirror(True)
 
-                self.repositories.append(repo)
+                self.repositories.append(repository)
             page += 1
 
         return self

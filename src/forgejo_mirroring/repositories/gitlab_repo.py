@@ -42,14 +42,14 @@ class GitlabRepo(ForgeApi):
                 if parser.get(["namespace", "full_path"]) in GITLAB_ORGS:
                     full_name = f"{parser.get("path_with_namespace")}"
                     if "deletion_scheduled" not in full_name:
-                        self.repositories.append(
-                            Repository(
-                                full_name=full_name,
-                                url=parser.get("web_url"),
-                                forge=Gitforge.GITLAB,
-                                archived=parser.get("archived"),
-                            ),
+                        repository = Repository(
+                            full_name=full_name,
+                            url=parser.get("web_url"),
+                            forge=Gitforge.GITLAB,
+                            archived=parser.get("archived"),
                         )
+
+                        self.repositories.append(repository)
             page += 1
 
         return self

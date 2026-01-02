@@ -13,6 +13,7 @@ def main():
     log.info("Parse Forgejo repositories...")
     forgejo = ForgejoRepo().listing()
 
-    print(len(github.repositories))
-    print(len(gitlab.repositories))
-    print(len(forgejo.repositories))
+    log.skip()
+    log.info(f"GitHub {len(github.repositories)} repositories")
+    log.info(f"GitLab {len(gitlab.repositories)} repositories")
+    log.info(f"Forgejo {len(forgejo.repositories)} repositories")

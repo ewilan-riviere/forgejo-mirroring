@@ -1,16 +1,16 @@
-from forgejo_mirroring.repositories.forge import ForgeApi
-from src.variables import (
+from forgejo_mirroring.repositories.forge_api import ForgeApi
+from forgejo_mirroring.config import (
     GITLAB_DOMAIN,
     GITLAB_TOKEN,
     GITLAB_ORGS,
     PER_PAGE,
 )
-from src.utils import Response, Parser
-from src.models import Repository, Gitforge
-from ....src.forgejo_mirroring.repositories.request_method import RequestMethod
+from forgejo_mirroring.services import Parser
+from forgejo_mirroring.models import Repository, Gitforge
+from .request_method import RequestMethod
 
 
-class Gitlab(ForgeApi):
+class GitlabRepo(ForgeApi):
     def __init__(self):
         super().__init__(
             self._set_headers(),
@@ -22,7 +22,7 @@ class Gitlab(ForgeApi):
         page = 1
 
         while True:
-            resp = self.request(
+            response = self.request(
                 "/projects",
                 RequestMethod.GET,
                 {
@@ -33,15 +33,11 @@ class Gitlab(ForgeApi):
                     "page": page,
                 },
             )
-            response = Response(resp)
-
-            if response.has_data is False:
+            body = self._parse_body(response)
+            if not body:
                 break
 
-            if not isinstance(response.data, (list, tuple)):
-                continue
-
-            for repo in response.data:
+            for repo in body:
                 parser = Parser(repo)
                 if parser.get(["namespace", "full_path"]) in GITLAB_ORGS:
                     full_name = f"{parser.get("path_with_namespace")}"

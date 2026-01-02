@@ -1,17 +1,17 @@
 import time
-from forgejo_mirroring.repositories.forge import ForgeApi
-from src.variables import (
+from forgejo_mirroring.repositories.forge_api import ForgeApi
+from forgejo_mirroring.config import (
     FORGEJO_DOMAIN,
     FORGEJO_TOKEN,
     PER_PAGE,
 )
-from src.utils import Response, Parser
-from src.models import Repository, Gitforge
-from ....src.forgejo_mirroring.repositories.request_method import RequestMethod
-from logger_utils import log
+from forgejo_mirroring.services import Parser
+from forgejo_mirroring.models import Repository, Gitforge
+from forgejo_mirroring.logging import log
+from .request_method import RequestMethod
 
 
-class Forgejo(ForgeApi):
+class ForgejoRepo(ForgeApi):
     def __init__(self):
         super().__init__(
             self._set_headers(),
@@ -23,7 +23,7 @@ class Forgejo(ForgeApi):
         page = 1
 
         while True:
-            resp = self.request(
+            response = self.request(
                 "/user/repos",
                 RequestMethod.GET,
                 {
@@ -32,15 +32,11 @@ class Forgejo(ForgeApi):
                     "page": page,
                 },
             )
-            response = Response(resp)
-
-            if response.has_data is False:
+            body = self._parse_body(response)
+            if not body:
                 break
 
-            if not isinstance(response.data, (list, tuple)):
-                continue
-
-            for repo in response.data:
+            for repo in body:
                 parser = Parser(repo)
                 repo = Repository(
                     full_name=f"{parser.get("full_name")}",

@@ -1,8 +1,9 @@
 from abc import ABC, abstractmethod
-from typing import List, Self
+from typing import List, Self, Any, Sequence
 from urllib.parse import urlencode, quote
 import requests
 from forgejo_mirroring.models import Repository
+from forgejo_mirroring.logging import log
 from .request_method import RequestMethod
 
 
@@ -23,6 +24,7 @@ class ForgeApi(ABC):
         body: dict[str, str | bool | int] | None = None,
     ):
         url = f"{self._api_url}{endpoint}"
+        log.debug(f"{method.name} {self.get_full_url(url, params)}")
 
         match method:
             case RequestMethod.GET:
@@ -88,6 +90,19 @@ class ForgeApi(ABC):
 
     def __str__(self):
         return f"""\nAPI URL: {self._api_url}\n"""
+
+    def _parse_body(self, response: requests.Response) -> Sequence[Any]:
+        response.raise_for_status()
+
+        body_raw: Any = response.json()
+
+        if not isinstance(body_raw, list):
+            raise ValueError("Expected a list in response body")
+
+        if not body_raw:
+            return []
+
+        return body_raw  # type: ignore
 
     @abstractmethod
     def listing(self) -> Self:

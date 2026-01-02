@@ -1,4 +1,3 @@
-from typing import Any, Sequence
 from forgejo_mirroring.config import (
     PER_PAGE,
     GITHUB_TOKEN,
@@ -6,19 +5,8 @@ from forgejo_mirroring.config import (
 )
 from forgejo_mirroring.services import Parser
 from forgejo_mirroring.models import Gitforge, Repository
-
-# import requests
-from .forge import ForgeApi
+from .forge_api import ForgeApi
 from .request_method import RequestMethod
-
-# from src.variables import (
-#     GITHUB_TOKEN,
-#     GITHUB_ORGS,
-#     PER_PAGE,
-# )
-# from src.utils import Response, Parser
-# from src.models import Repository, Gitforge
-# from .request_method import RequestMethod
 
 
 class GithubRepo(ForgeApi):
@@ -45,18 +33,8 @@ class GithubRepo(ForgeApi):
                     "page": page,
                 },
             )
-            response.raise_for_status()
-            body_raw: Any = response.json()
-
-            if isinstance(body_raw, Sequence):
-                body: Sequence[Any] = body_raw  # type: ignore
-            else:
-                print("Error in list.")
-                body = []
-                break
-
+            body = self._parse_body(response)
             if not body:
-                # print("Reach end of repositories list.")
                 break
 
             for repo in body:

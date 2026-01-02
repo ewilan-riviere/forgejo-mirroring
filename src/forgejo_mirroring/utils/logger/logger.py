@@ -50,6 +50,15 @@ class Logger:
             )
         )
 
+    def debug(self, message: str):
+        print(
+            self._fmt(
+                message=message,
+                level="DEBUG",
+                color=LoggerColor.YELLOW,
+            )
+        )
+
     def info(self, message: str):
         print(
             self._fmt(

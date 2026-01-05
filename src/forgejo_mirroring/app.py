@@ -35,8 +35,16 @@ def parseArguments() -> tuple[bool, bool]:
     )
 
     args = parser.parse_args()
+    delete = bool(args.delete)
+    archived = bool(args.archived)
 
-    return bool(args.delete), bool(args.archived)
+    if delete:
+        log.comment(f"Enable delete mode: {help_delete}")
+    if archived:
+        log.comment(f"Enable archived mode: {help_archived}")
+    log.skip()
+
+    return (delete, archived)
 
 
 def mirror_repositories(forge: ForgeApi, keep_archived: bool = False) -> ForgejoRepo:

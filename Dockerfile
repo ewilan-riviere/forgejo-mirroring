@@ -1,10 +1,13 @@
-FROM python:3.10-slim
+FROM python:3.12-slim
+
+ENV VIRTUAL_ENV=/opt/venv
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 WORKDIR /app
 
-COPY pyproject.toml .
-RUN pip install --no-cache-dir .
-
 COPY . .
+
+RUN pip install --no-cache-dir -e .
 
 CMD ["tail", "-f", "/dev/null"]

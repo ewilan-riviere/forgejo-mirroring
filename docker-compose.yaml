@@ -1,7 +1,8 @@
 services:
-  forgejo-mirroring:
+  mirroring:
     build: .
-    container_name: ${CONTAINER_NAME:-forgejo-mirroring}
-    restart: ${CONTAINER_RESTART:-unless-stopped}
+    container_name: mirroring
+    restart: unless-stopped
+    network_mode: "host"
     env_file:
       - .env

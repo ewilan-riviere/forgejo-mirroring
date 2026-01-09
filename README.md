@@ -63,7 +63,7 @@ docker compose up -d --build
 Run application:
 
 ```sh
-docker exec -it forgejo-mirroring python /app
+docker exec -it mirroring forgejo-mirroring
 ```
 
 | Option       | Alias | Description                                                    | Default |
@@ -129,5 +129,5 @@ pytest -v
 - [**Delete a repository**](https://codeberg.org/api/swagger#/repository/repoDelete): _DELETE_ `/repos/{owner}/{repo}`
 - [**Migrate a remote git repository**](https://codeberg.org/api/swagger#/repository/repoMigrate): _POST_ `/repos/migrate` (`clone_addr`, `repo_name`, `auth_username`, `auth_password`, `mirror`, `private`)
 
-[python-version-src]: https://img.shields.io/static/v1?style=flat&label=Python&message=v3.10&color=3776AB&logo=python&logoColor=ffffff&labelColor=18181b
+[python-version-src]: https://img.shields.io/static/v1?style=flat&label=Python&message=v3.12&color=3776AB&logo=python&logoColor=ffffff&labelColor=18181b
 [python-version-href]: https://www.python.org/

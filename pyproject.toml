@@ -1,24 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "forgejo_mirroring"
+name = "forgejo-mirroring"
 version = "0.1.0"
+dependencies = ["requests", "dotenv"]
+requires-python = ">=3.10"
+readme = "README.md"
 description = "Quickly back up your GitHub and GitLab repositories via Forgejo with mirroring."
 authors = [{ name = "Ewilan Rivière" }]
-readme = "README.md"
-requires-python = ">=3.10"
 
-dependencies = [
-  "python-dotenv",
-  "requests",
-]
+[project.scripts]
+forgejo-mirroring = "forgejo_mirroring.app:main"
 
 [project.optional-dependencies]
 dev = [
   "pytest>=7.0",
 ]
-
-[build-system]
-requires = ["setuptools>=68"]
-build-backend = "setuptools.build_meta"
-
-[project.scripts]
-forgejo-mirroring = "forgejo_mirroring.app:main"

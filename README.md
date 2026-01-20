@@ -98,6 +98,14 @@ sudo crontab -e
 0 0 * * SUN docker exec -it fm forgejo-mirroring sync -a
 ```
 
+### Refresh token
+
+If you need to refresh GitHub and GitLab tokens, change tokens into `.env` and just use `override` command:
+
+```sh
+docker exec -it fm forgejo-mirroring override -a
+```
+
 <!-- ### Test
 
 Execute tests:

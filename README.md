@@ -2,7 +2,7 @@
 
 [![python][python-version-src]][python-version-href]
 
-Quickly back up your GitHub and GitLab repositories via [Forgejo](https://forgejo.org/) with mirroring, Docker ready.
+Quickly backup your GitHub and GitLab repositories via [Forgejo](https://forgejo.org/) mirroring, Docker ready.
 
 Repository mirror name will use this template: `{forge_shortcut}_{group}_{name}` (lowercase), like `gh_ewilan-riviere_forgejo-mirroring`. Mirror authentication will use `oauth2` with GitHub/GitLab token (`mirror` and `private`).
 
@@ -54,7 +54,9 @@ Here domain is `codeberg.org`, of course you can replace with your own instance.
 
 ## Usage
 
-Usage
+```sh
+docker run --rm forgejo-mirroring sync -a
+```
 
 <!-- ### Test
 

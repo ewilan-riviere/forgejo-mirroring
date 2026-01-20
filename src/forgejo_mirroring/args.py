@@ -46,6 +46,3 @@ class ForgejoMirroringArgs:
 
         self.archived: bool = getattr(args, "archived", False)
         self.pull: bool = getattr(args, "pull", False)
-
-        print("self.archived", self.archived)
-        print("self.pull", self.pull)

@@ -54,9 +54,34 @@ Here domain is `codeberg.org`, of course you can replace with your own instance.
 
 ## Usage
 
+Use `docker compose` to execute container:
+
 ```sh
-docker run --rm forgejo-mirroring sync -a
+docker compose up -d
 ```
+
+### `sync`
+
+Sync GitHub and GitLab repositories with Forgejo.
+
+```sh
+docker exec -it fm forgejo-mirroring sync
+```
+
+| Option       | Alias | Description                                  | Default |
+| ------------ | ----- | -------------------------------------------- | ------- |
+| `--archived` | `-a`  | Create mirrors for archived repositories too | `False` |
+| `--pull`     | `-p`  | Pull changements from mirrored repository    | `False` |
+
+### `override`
+
+```sh
+docker exec -it fm forgejo-mirroring override
+```
+
+| Option       | Alias | Description                                  | Default |
+| ------------ | ----- | -------------------------------------------- | ------- |
+| `--archived` | `-a`  | Create mirrors for archived repositories too | `False` |
 
 <!-- ### Test
 

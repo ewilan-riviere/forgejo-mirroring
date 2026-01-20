@@ -1,7 +1,7 @@
 services:
-  mirroring:
+  cli:
     build: .
-    container_name: mirroring
+    container_name: fm
     restart: unless-stopped
     network_mode: "host"
     env_file:

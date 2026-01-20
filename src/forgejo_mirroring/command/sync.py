@@ -35,8 +35,8 @@ class CommandSync:
             self._mirror(github_missing, self._github)
             self._mirror(gitlab_missing, self._gitlab)
 
-        if args.pull:
-            self._sync_mirrors()
+            if args.pull:
+                self._sync_mirrors()
 
         utils.alert_sound()
 

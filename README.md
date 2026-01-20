@@ -83,6 +83,19 @@ docker exec -it fm forgejo-mirroring override
 | ------------ | ----- | -------------------------------------------- | ------- |
 | `--archived` | `-a`  | Create mirrors for archived repositories too | `False` |
 
+### Sync every week
+
+If you want to sync your repositories with Forgejo every week, you can set a cron:
+
+```sh
+sudo crontab -e
+```
+
+```bash
+# Every sunday
+0 0 * * SUN docker exec -it fm forgejo-mirroring sync -a
+```
+
 <!-- ### Test
 
 Execute tests:

@@ -1,13 +1,17 @@
+"""Represents generic forge"""
+
 from abc import ABC, abstractmethod
 from typing import List, Self, Any, Sequence
 from urllib.parse import urlencode, quote
 import requests
 from forgejo_mirroring.models import Repository
-from forgejo_mirroring.logging import log
-from .request_method import RequestMethod
+from forgejo_mirroring.models import RequestMethod
+from forgejo_mirroring.env import logger
 
 
-class ForgeApi(ABC):
+class Forge(ABC):
+    """Represents generic forge"""
+
     TIMEOUT: int = 30
 
     def __init__(self, headers: dict[str, str], api_url: str, token: str):
@@ -23,8 +27,9 @@ class ForgeApi(ABC):
         params: dict[str, str | bool | int] | None = None,
         body: dict[str, str | bool | int] | None = None,
     ):
+        """Execute API request"""
         url = f"{self._api_url}{endpoint}"
-        log.debug(f"{method.name} {self.get_full_url(url, params)}")
+        logger.debug("%s %s", method.name, self.get_full_url(url, params))
 
         match method:
             case RequestMethod.GET:
@@ -71,6 +76,7 @@ class ForgeApi(ABC):
     def get_full_url(
         self, url: str, params: dict[str, str | bool | int] | None = None
     ) -> str:
+        """Get full URL to fetch API"""
         query_str = ""
         if params:
             str_params = {k: str(v) for k, v in params.items()}
@@ -79,12 +85,15 @@ class ForgeApi(ABC):
         return f"{url}?{query_str}" if query_str else url
 
     def print_repositories(self):
+        """Print list of forge repositories"""
         i = 1
-        print(len(self.repositories))
+        print(f"\n{len(self.repositories)} repositories\n")
         for repo in self.repositories:
             msg = f"{i}. {repo.full_name}"
             if repo.archived:
                 msg = f"{msg} (archived)"
+            if repo.mirrored:
+                msg = f"{msg} [mirror]"
             print(msg)
             i = i + 1
 

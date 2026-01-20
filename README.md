@@ -52,59 +52,17 @@ Here domain is `codeberg.org`, of course you can replace with your own instance.
 - `repository`: _Read and write_
 - `user`: _Read_
 
-## Docker
+## Usage
 
-Create container with `docker compose`:
+Usage
 
-```sh
-docker compose up -d --build
-```
-
-Run application:
-
-```sh
-docker exec -it mirroring forgejo-mirroring
-```
-
-| Option       | Alias | Description                                                    | Default |
-| ------------ | ----- | -------------------------------------------------------------- | ------- |
-| `--delete`   | `-d`  | Delete all mirroring repositories on Forgejo, before mirroring | —       |
-| `--archived` | `-a`  | Mirroring archived repositories too                            | —       |
-
-Example:
-
-```sh
-# This command will delete all mirrored repositories and mirroring all repositories included archives
-docker exec -it forgejo-mirroring python /app -d -a
-```
-
-## Local
-
-### Dependencies
-
-You have to use Python v3.10 or later, install requirements:
-
-```sh
-pip install .
-# OR for local development
-pip install -e ".[dev]"
-```
-
-### Usage
-
-Mirroring repositories from GitLab and GitHub (if not exists).
-
-```sh
-python -m forgejo_mirroring
-```
-
-### Test
+<!-- ### Test
 
 Execute tests:
 
 ```sh
 pytest -v
-```
+``` -->
 
 ## Endpoints used
 

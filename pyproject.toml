@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "forgejo-mirroring"
 version = "0.1.0"
 dependencies = ["requests", "dotenv"]
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 readme = "README.md"
 description = "Quickly back up your GitHub and GitLab repositories via Forgejo with mirroring."
 authors = [{ name = "Ewilan Rivière" }]

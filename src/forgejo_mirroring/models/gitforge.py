@@ -1,12 +1,17 @@
+"""Represents forge enum"""
+
 from enum import Enum
 
 
 class Gitforge(Enum):
+    """Represents forge enum"""
+
     GITLAB = "gitlab"
     GITHUB = "github"
     FORGEJO = "forgejo"
 
     def get_mirror_name(self):
+        """Get forge shortcut"""
         if self is Gitforge.GITLAB:
             return "gl"
         elif self is Gitforge.GITHUB:
@@ -17,6 +22,7 @@ class Gitforge(Enum):
             raise ValueError(f"Unsupported forge: {self}")
 
     def get_forge_name(self):
+        """Get forge label"""
         if self is Gitforge.GITLAB:
             return "GitLab"
         elif self is Gitforge.GITHUB:

@@ -1,15 +1,18 @@
-from forgejo_mirroring.config import (
+"""GitHub forge"""
+
+from forgejo_mirroring.models import Repository, RequestMethod, Gitforge
+from forgejo_mirroring.env import (
     PER_PAGE,
     GITHUB_TOKEN,
     GITHUB_ORGS,
 )
-from forgejo_mirroring.services import Parser
-from forgejo_mirroring.models import Gitforge, Repository
-from .forge_api import ForgeApi
-from .request_method import RequestMethod
+import forgejo_mirroring.utils as utils
+from .forge import Forge
 
 
-class GithubRepo(ForgeApi):
+class ForgeGithub(Forge):
+    """GitHub forge"""
+
     def __init__(self):
         super().__init__(
             self._set_headers(),
@@ -38,13 +41,16 @@ class GithubRepo(ForgeApi):
                 break
 
             for repo in body:
-                parser = Parser(repo)
-                if parser.get(["owner", "login"]) in GITHUB_ORGS:
+                if utils.extract(repo, ["owner", "login"]) in GITHUB_ORGS:
+                    full_name = (
+                        f"{utils.extract(repo, ['owner', 'login'])}/"
+                        f"{utils.extract(repo, 'name')}"
+                    )
                     repository = Repository(
-                        full_name=f"{parser.get(["owner", "login"])}/{parser.get("name")}",
-                        url=parser.get("html_url"),
+                        full_name=full_name,
+                        url=utils.extract(repo, "html_url"),
                         forge=Gitforge.GITHUB,
-                        archived=parser.get("archived"),
+                        archived=utils.extract(repo, "archived"),
                     )
 
                     if repository:

@@ -1,7 +1,11 @@
-from . import Gitforge
+"""Represents forge repository"""
+
+from .gitforge import Gitforge
 
 
 class Repository:
+    """Represents forge repository"""
+
     def __init__(
         self, full_name: str, url: str, forge: Gitforge, archived: bool = False
     ):
@@ -14,11 +18,17 @@ class Repository:
         self.name = splitted[1]  # slink-docker
         self.archived = archived
         self.mirrored = False
-        self.mirror_name = (
-            f"{forge.get_mirror_name()}_{self.group}_{self.name}".lower()
-        )  # gl_slink-docker
+        self.available_on_forgejo = False
 
-    def set_mirror(self, value: bool):
+        if forge != Gitforge.FORGEJO:
+            self.mirror_name = (
+                f"{forge.get_mirror_name()}_{self.group}_{self.name}".lower()
+            )  # gl_slink-docker
+        else:
+            self.mirror_name = ""
+
+    def set_mirrored(self, value: bool):
+        """Set bool for `mirrored`"""
         self.mirrored = value
 
     def __str__(self):

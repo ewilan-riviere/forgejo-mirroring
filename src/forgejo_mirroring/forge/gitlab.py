@@ -1,16 +1,19 @@
-from forgejo_mirroring.repositories.forge_api import ForgeApi
-from forgejo_mirroring.config import (
+"""GitLab forge"""
+
+from forgejo_mirroring.models import Repository, RequestMethod, Gitforge
+from forgejo_mirroring.env import (
     GITLAB_DOMAIN,
     GITLAB_TOKEN,
     GITLAB_ORGS,
     PER_PAGE,
 )
-from forgejo_mirroring.services import Parser
-from forgejo_mirroring.models import Repository, Gitforge
-from .request_method import RequestMethod
+import forgejo_mirroring.utils as utils
+from .forge import Forge
 
 
-class GitlabRepo(ForgeApi):
+class ForgeGitlab(Forge):
+    """GitLab forge"""
+
     def __init__(self):
         super().__init__(
             self._set_headers(),
@@ -38,15 +41,14 @@ class GitlabRepo(ForgeApi):
                 break
 
             for repo in body:
-                parser = Parser(repo)
-                if parser.get(["namespace", "full_path"]) in GITLAB_ORGS:
-                    full_name = f"{parser.get("path_with_namespace")}"
+                if utils.extract(repo, ["namespace", "full_path"]) in GITLAB_ORGS:
+                    full_name = f"{utils.extract(repo, "path_with_namespace")}"
                     if "deletion_scheduled" not in full_name:
                         repository = Repository(
                             full_name=full_name,
-                            url=parser.get("web_url"),
+                            url=utils.extract(repo, "web_url"),
                             forge=Gitforge.GITLAB,
-                            archived=parser.get("archived"),
+                            archived=utils.extract(repo, "archived"),
                         )
 
                         self.repositories.append(repository)

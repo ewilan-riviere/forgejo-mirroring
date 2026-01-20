@@ -100,7 +100,7 @@ sudo crontab -e
 
 ### Refresh token
 
-If you need to refresh GitHub and GitLab tokens, change tokens into `.env` and just use `override` command:
+If you need to refresh GitHub and GitLab tokens, change tokens into `.env` and use `override` command:
 
 ```sh
 docker exec -it fm forgejo-mirroring override -a

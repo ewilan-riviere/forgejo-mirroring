@@ -75,6 +75,8 @@ docker exec -it fm forgejo-mirroring sync
 
 ### `override`
 
+Erase Forgejo mirrored repositories to create new mirrors of GitHub and GitLab repositories with Forgejo.
+
 ```sh
 docker exec -it fm forgejo-mirroring override
 ```

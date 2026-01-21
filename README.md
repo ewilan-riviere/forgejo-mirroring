@@ -11,6 +11,7 @@ Repository mirror name will use this template: `{forge_shortcut}_{group}_{name}`
 Create `.env`:
 
 ```sh
+git clone https://github.com/ewilan-riviere/forgejo-mirroring.git
 cp .env.example .env
 ```
 

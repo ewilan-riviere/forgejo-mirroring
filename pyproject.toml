@@ -8,7 +8,7 @@ version = "0.1.0"
 dependencies = ["requests", "dotenv"]
 requires-python = ">=3.12"
 readme = "README.md"
-description = "Quickly backup your GitHub and GitLab repositories via Forgejo mirroring."
+description = "Quickly backup your GitHub and GitLab repositories via Forgejo mirroring, Docker ready."
 authors = [{ name = "Ewilan Rivière" }]
 
 [project.scripts]
